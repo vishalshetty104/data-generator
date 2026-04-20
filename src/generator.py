@@ -49,6 +49,12 @@ def parse_arguments():
         help="Rows per batch (auto-detected if not specified)"
     )
     parser.add_argument(
+        "--memory-percentage",
+        type=float,
+        default=5.0,
+        help="Percentage of available memory to use for batch sizing (default: 5.0)"
+    )
+    parser.add_argument(
         "--verbose",
         action="store_true",
         help="Show detailed progress"
@@ -138,8 +144,16 @@ def main():
     if args.output is None:
         args.output = get_default_output_path()
 
+    schema_parser = SchemaParser(args.schema)
+    if not schema_parser.load():
+        raise ValueError(f"Failed to load schema: {schema_parser.get_errors()}")
+    if not schema_parser.validate():
+        raise ValueError(f"Invalid schema: {schema_parser.get_errors()}")
+
+    num_columns = len(schema_parser.get_columns())
+
     if args.batch_size is None:
-        args.batch_size = calculate_batch_size()
+        args.batch_size = calculate_batch_size(num_columns, args.memory_percentage)
 
     if args.batch_size <= 0:
         raise ValueError("--batch-size must be a positive integer")
