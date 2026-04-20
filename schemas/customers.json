@@ -1,0 +1,18 @@
+{
+  "columns": [
+    {"name": "customer_id", "type": "integer", "min": 10000, "max": 99999999},
+    {"name": "first_name", "type": "name"},
+    {"name": "last_name", "type": "name"},
+    {"name": "email", "type": "email"},
+    {"name": "phone", "type": "phone"},
+    {"name": "address", "type": "string", "min_length": 20, "max_length": 150},
+    {"name": "city", "type": "string", "min_length": 3, "max_length": 50},
+    {"name": "postal_code", "type": "string", "min_length": 5, "max_length": 10},
+    {"name": "country", "type": "enum", "values": ["United States", "Canada", "United Kingdom", "Germany", "France", "Australia", "Japan", "Brazil"]},
+    {"name": "age", "type": "integer", "min": 18, "max": 90},
+    {"name": "membership_tier", "type": "enum", "values": ["Bronze", "Silver", "Gold", "Platinum", "Diamond"]},
+    {"name": "registration_date", "type": "date", "format": "%Y-%m-%d", "min": "2015-01-01", "max": "2025-12-31"},
+    {"name": "email_verified", "type": "boolean"},
+    {"name": "is_active", "type": "boolean"}
+  ]
+}

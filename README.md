@@ -93,19 +93,18 @@ data-generator/
 │   ├── output.py          # Batch CSV writer
 │   └── memory_utils.py    # Memory detection
 ├── schemas/
-│   └── schema_example.json
+│   ├── schema_example.json
+│   ├── products.json      # E-commerce products
+│   ├── customers.json     # Customer profiles
+│   ├── employees.json     # HR records
+│   ├── transactions.json  # Financial transactions
+│   └── orders.json       # Order records
 ├── output/                # Generated CSV files
 │   └── .gitkeep
+├── benchmark.py          # Performance benchmarking
 ├── requirements.txt
 └── README.md
 ```
-
 ## Performance
 
-| Rows | Batch Size | Time | Rate |
-|------|-----------|------|------|
-| 1,000 | 100,000 | 0.17s | 6,000 rows/sec |
-| 10,000 | 1,000 | 1.65s | 6,000 rows/sec |
-| 1,000,000 | 100,000 | ~3 min | ~5,500 rows/sec |
-
-*Note: Performance varies based on column complexity and error rate.*
+[Performance Benchmark Report](./output/benchmark_report.md)

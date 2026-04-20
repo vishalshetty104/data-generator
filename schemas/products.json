@@ -1,0 +1,19 @@
+{
+  "columns": [
+    {"name": "product_id", "type": "integer", "min": 1000, "max": 999999},
+    {"name": "sku", "type": "string", "min_length": 8, "max_length": 12},
+    {"name": "name", "type": "string", "min_length": 20, "max_length": 100},
+    {"name": "description", "type": "string", "min_length": 50, "max_length": 500},
+    {"name": "brand", "type": "string", "min_length": 3, "max_length": 30},
+    {"name": "category", "type": "enum", "values": ["Electronics", "Clothing", "Home & Garden", "Sports", "Books", "Toys", "Health & Beauty", "Food & Beverage"]},
+    {"name": "price", "type": "decimal", "min": 0.99, "max": 9999.99, "precision": 2},
+    {"name": "weight_kg", "type": "decimal", "min": 0.01, "max": 50.0, "precision": 3},
+    {"name": "stock_quantity", "type": "integer", "min": 0, "max": 10000},
+    {"name": "is_featured", "type": "boolean"},
+    {"name": "condition", "type": "enum", "values": ["new", "refurbished", "used", "damaged"]},
+    {"name": "created_at", "type": "date", "format": "%Y-%m-%d", "min": "2018-01-01", "max": "2026-03-31"},
+    {"name": "rating", "type": "decimal", "min": 0.0, "max": 5.0, "precision": 2},
+    {"name": "is_active", "type": "boolean"},
+    {"name": "tags", "type": "string", "min_length": 5, "max_length": 50}
+  ]
+}

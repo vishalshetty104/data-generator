@@ -1,0 +1,15 @@
+{
+  "columns": [
+    {"name": "transaction_id", "type": "integer", "min": 1000000, "max": 9999999999},
+    {"name": "customer_id", "type": "integer", "min": 10000, "max": 99999999},
+    {"name": "amount", "type": "decimal", "min": 0.01, "max": 50000.00, "precision": 2},
+    {"name": "currency", "type": "enum", "values": ["USD", "EUR", "GBP", "CAD", "AUD", "JPY"]},
+    {"name": "transaction_type", "type": "enum", "values": ["purchase", "refund", "chargeback", "transfer", "deposit", "withdrawal"]},
+    {"name": "payment_method", "type": "enum", "values": ["credit_card", "debit_card", "paypal", "bank_transfer", "crypto", "gift_card"]},
+    {"name": "status", "type": "enum", "values": ["completed", "pending", "failed", "cancelled", "disputed"]},
+    {"name": "reference", "type": "string", "min_length": 10, "max_length": 20},
+    {"name": "created_at", "type": "date", "format": "%Y-%m-%d", "min": "2023-01-01", "max": "2026-03-31"},
+    {"name": "is_refunded", "type": "boolean"},
+    {"name": "merchant_id", "type": "string", "min_length": 8, "max_length": 15}
+  ]
+}

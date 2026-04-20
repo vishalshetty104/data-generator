@@ -1,0 +1,18 @@
+{
+  "columns": [
+    {"name": "employee_id", "type": "integer", "min": 1000, "max": 99999},
+    {"name": "first_name", "type": "name"},
+    {"name": "last_name", "type": "name"},
+    {"name": "email", "type": "email"},
+    {"name": "phone", "type": "phone"},
+    {"name": "job_title", "type": "string", "min_length": 10, "max_length": 60},
+    {"name": "department", "type": "enum", "values": ["Engineering", "Sales", "Marketing", "HR", "Finance", "Operations", "Legal", "Customer Success", "Product"]},
+    {"name": "salary", "type": "decimal", "min": 30000, "max": 250000, "precision": 2},
+    {"name": "hire_date", "type": "date", "format": "%Y-%m-%d", "min": "1990-01-01", "max": "2025-06-30"},
+    {"name": "birth_date", "type": "date", "format": "%Y-%m-%d", "min": "1960-01-01", "max": "2000-12-31"},
+    {"name": "manager_id", "type": "integer", "min": 1000, "max": 99999},
+    {"name": "is_remote", "type": "boolean"},
+    {"name": "employment_status", "type": "enum", "values": ["full_time", "part_time", "contractor", "intern"]},
+    {"name": "is_active", "type": "boolean"}
+  ]
+}

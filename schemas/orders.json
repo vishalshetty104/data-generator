@@ -1,0 +1,17 @@
+{
+  "columns": [
+    {"name": "order_id", "type": "integer", "min": 100000, "max": 999999999},
+    {"name": "customer_id", "type": "integer", "min": 10000, "max": 99999999},
+    {"name": "order_status", "type": "enum", "values": ["pending", "confirmed", "processing", "shipped", "delivered", "cancelled", "returned"]},
+    {"name": "total_amount", "type": "decimal", "min": 5.00, "max": 10000.00, "precision": 2},
+    {"name": "shipping_cost", "type": "decimal", "min": 0.00, "max": 50.00, "precision": 2},
+    {"name": "tax_amount", "type": "decimal", "min": 0.00, "max": 1000.00, "precision": 2},
+    {"name": "shipping_method", "type": "enum", "values": ["standard", "express", "overnight", "international"]},
+    {"name": "num_items", "type": "integer", "min": 1, "max": 50},
+    {"name": "order_date", "type": "date", "format": "%Y-%m-%d", "min": "2024-01-01", "max": "2026-03-31"},
+    {"name": "ship_date", "type": "date", "format": "%Y-%m-%d", "min": "2024-01-01", "max": "2026-04-20"},
+    {"name": "delivery_date", "type": "date", "format": "%Y-%m-%d", "min": "2024-01-01", "max": "2026-04-25"},
+    {"name": "is_paid", "type": "boolean"},
+    {"name": "is_shipped", "type": "boolean"}
+  ]
+}
