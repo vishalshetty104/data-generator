@@ -1,0 +1,13 @@
+{
+  "columns": [
+    {"name": "id", "type": "integer", "min": 1, "max": 1000000},
+    {"name": "first_name", "type": "name"},
+    {"name": "last_name", "type": "name"},
+    {"name": "email", "type": "email"},
+    {"name": "phone", "type": "phone"},
+    {"name": "birth_date", "type": "date", "format": "%Y-%m-%d", "min": "1960-01-01", "max": "2005-12-31"},
+    {"name": "salary", "type": "decimal", "min": 30000, "max": 150000, "precision": 2},
+    {"name": "department", "type": "enum", "values": ["Engineering", "Sales", "Marketing", "HR", "Finance"]},
+    {"name": "is_active", "type": "boolean"}
+  ]
+}
