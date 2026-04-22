@@ -41,7 +41,7 @@ class BatchCSVWriter:
             self.writer.writerows(self.batch)
             self.total_rows_written += len(self.batch)
             self.batch = []
-            self.file_handle.flush()
+            
 
     def close(self) -> None:
         if self.batch:

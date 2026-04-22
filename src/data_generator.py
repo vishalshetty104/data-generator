@@ -2,6 +2,7 @@ from datetime import datetime, timedelta
 from typing import Dict, Any, Iterator, Optional
 from random import randint, uniform, choice, random
 import random as random_module
+from unittest import case
 
 from faker import Faker
 
@@ -25,40 +26,41 @@ class DataGenerator:
     def _generate_value(self, col: Dict[str, Any]) -> Any:
         col_type = col["type"]
 
-        if col_type == "integer":
-            return randint(col.get("min", 0), col.get("max", 1000))
+        match col_type:
+            case "integer":
+                return randint(col.get("min", 0), col.get("max", 1000))
+            case "decimal":
+                precision = col.get("precision", 2)
+                value = uniform(col.get("min", 0), col.get("max", 1000))
+                return round(value, precision)
 
-        elif col_type == "decimal":
-            precision = col.get("precision", 2)
-            value = uniform(col.get("min", 0), col.get("max", 1000))
-            return round(value, precision)
+            case "string":
+                min_len = col.get("min_length", 5)
+                max_len = col.get("max_length", 20)
+                length = randint(min_len, max_len)
+                return ''.join(random_module.choices('abcdefghijklmnopqrstuvwxyz', k=length))
 
-        elif col_type == "string":
-            min_len = col.get("min_length", 5)
-            max_len = col.get("max_length", 20)
-            length = randint(min_len, max_len)
-            return ''.join(random_module.choices('abcdefghijklmnopqrstuvwxyz', k=length))
+            case "name":
+                return self.faker.name()
 
-        elif col_type == "name":
-            return self.faker.name()
+            case "email":
+                return self.faker.email()
 
-        elif col_type == "email":
-            return self.faker.email()
+            case "phone":
+                return self.faker.phone_number()
 
-        elif col_type == "phone":
-            return self.faker.phone_number()
+            case "date":
+                return self._generate_date(col)
 
-        elif col_type == "date":
-            return self._generate_date(col)
+            case "boolean":
+                return choice([True, False])
 
-        elif col_type == "boolean":
-            return choice([True, False])
+            case "enum":
+                return choice(col["values"])
 
-        elif col_type == "enum":
-            return choice(col["values"])
-
-        else:
-            return None
+            case _:
+                return None
+        
 
     def _generate_date(self, col: Dict[str, Any]) -> str:
         date_format = col.get("format", "%Y-%m-%d")
