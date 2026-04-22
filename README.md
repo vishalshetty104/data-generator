@@ -106,5 +106,10 @@ data-generator/
 └── README.md
 ```
 ## Performance
+Run Benchmark by :
+```bash
+python benchmark.py
+```
+Report is generated and saved in the output folder.
 
 [Performance Benchmark Report](./output/benchmark_report.md)
