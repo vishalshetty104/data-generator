@@ -111,7 +111,6 @@ def run_benchmark(schema_name, schema_path):
         "csv_size_mb": round(csv_size_mb, 2),
         "rows_with_issues": parsed.get("rows_with_issues", 0),
         "issue_breakdown": parsed.get("issue_breakdown", {}),
-        "output_path": str(output_path),
     }
 
 
@@ -170,16 +169,12 @@ def generate_report(results):
         issue_str = ", ".join([f"{k}: {v}" for k, v in r["issue_breakdown"].items()]) if r["issue_breakdown"] else "none"
         lines.append(f"- **{r['schema_name']}:** {issue_str}")
 
-    lines.extend([
-        f"",
-        f"## Output Files",
-        f"",
-    ])
-
-    for r in sorted(valid_results, key=lambda x: x["schema_name"]):
-        lines.append(f"- `{r['output_path']}`")
-
     return "\n".join(lines)
+
+
+def cleanup_benchmark_files():
+    for f in OUTPUT_DIR.glob("benchmark_*.csv"):
+        f.unlink()
 
 
 def main():
@@ -210,6 +205,8 @@ def main():
     print("\n" + "=" * 60)
     print("Benchmark Complete!")
     print("=" * 60)
+
+    cleanup_benchmark_files()
 
 
 if __name__ == "__main__":

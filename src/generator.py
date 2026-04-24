@@ -12,11 +12,21 @@ from memory_utils import calculate_batch_size, get_system_info
 
 
 def get_default_output_path():
+    """Generate a default output path with timestamp.
+
+    Returns:
+        Path string in format 'output/output_YYYY-MM-DD_HHMMSS.csv'.
+    """
     timestamp = datetime.now().strftime("%Y-%m-%d_%H%M%S")
     return f"output/output_{timestamp}.csv"
 
 
 def parse_arguments():
+    """Parse command line arguments for the data generator.
+
+    Returns:
+        Namespace containing parsed arguments.
+    """
     parser = argparse.ArgumentParser(
         description="Synthetic Data Generator with Data Quality Issues"
     )
@@ -70,6 +80,20 @@ def generate_synthetic_data(
     batch_size: int,
     verbose: bool = False
 ) -> Dict[str, Any]:
+    """Generate synthetic data based on a schema file.
+
+    Args:
+        schema_path: Path to JSON schema file defining columns.
+        num_rows: Number of data rows to generate.
+        output_path: Path to output CSV file.
+        error_rate: Probability of data quality issues (0.0-1.0).
+        batch_size: Number of rows to process per batch.
+        verbose: If True, print progress information.
+
+    Returns:
+        Dictionary with generation statistics including total_rows,
+        rows_with_issues, issue_counts, and elapsed_time.
+    """
     parser = SchemaParser(schema_path)
 
     if not parser.load():
@@ -133,6 +157,7 @@ def generate_synthetic_data(
 
 
 def main():
+    """Main entry point for the synthetic data generator CLI."""
     args = parse_arguments()
 
     if args.error_rate < 0 or args.error_rate > 1:

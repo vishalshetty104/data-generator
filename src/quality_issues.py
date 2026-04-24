@@ -4,31 +4,59 @@ from typing import Dict, Any, List
 
 
 class QualityIssues:
+    """Apply realistic data quality issues to generated rows.
+
+    Injects missing values, invalid values, and formatting inconsistencies
+    into data rows according to a configured error rate.
+    """
+
     def __init__(self, error_rate: float):
+        """Initialize QualityIssues with specified error rate.
+
+        Args:
+            error_rate: Probability (0.0-1.0) that quality issues will be applied.
+        """
         self.error_rate = error_rate
 
     def apply_issues(self, row: Dict[str, Any], column_types: Dict[str, str]) -> Dict[str, Any]:
-        modified_row = row.copy()
-        issues_applied = []
+        """Apply random data quality issues to a row.
 
+        Args:
+            row: Dictionary representing a data row.
+            column_types: Dictionary mapping column names to their types.
+
+        Returns:
+            Tuple of (modified row, list of applied issues).
+        """
+        issues_applied = []
+        modified_row = row
         if random() < self.error_rate * 0.3:
-            modified_row, issue = self._apply_missing_value(modified_row, column_types)
+            modified_row, issue = self._apply_missing_value(row, column_types)
             if issue:
                 issues_applied.append(issue)
 
         if random() < self.error_rate * 0.25:
-            modified_row, issue = self._apply_invalid_value(modified_row, column_types)
+            modified_row, issue = self._apply_invalid_value(row, column_types)
             if issue:
                 issues_applied.append(issue)
 
         if random() < self.error_rate * 0.15:
-            modified_row, issue = self._apply_formatting_inconsistency(modified_row, column_types)
+            modified_row, issue = self._apply_formatting_inconsistency(row, column_types)
             if issue:
                 issues_applied.append(issue)
 
         return modified_row, issues_applied
 
     def _apply_missing_value(self, row: Dict[str, Any], column_types: Dict[str, str]) -> tuple:
+        """Apply a missing value issue to a random column.
+
+        Args:
+            row: Dictionary representing a data row.
+            column_types: Dictionary mapping column names to their types.
+
+        Returns:
+            Tuple of (modified row, issue description string).
+        """
         col_name = choice(list(row.keys()))
         original_value = row[col_name]
 
@@ -46,6 +74,15 @@ class QualityIssues:
         return row, f"missing:{col_name}"
 
     def _apply_invalid_value(self, row: Dict[str, Any], column_types: Dict[str, str]) -> tuple:
+        """Apply an invalid value issue to a random column.
+
+        Args:
+            row: Dictionary representing a data row.
+            column_types: Dictionary mapping column names to their types.
+
+        Returns:
+            Tuple of (modified row, issue description string).
+        """
         col_name = choice(list(row.keys()))
         col_type = column_types.get(col_name, "string")
 
@@ -68,6 +105,15 @@ class QualityIssues:
         return row, f"invalid:{col_name}"
 
     def _apply_formatting_inconsistency(self, row: Dict[str, Any], column_types: Dict[str, str]) -> tuple:
+        """Apply formatting inconsistency to date, phone, or email columns.
+
+        Args:
+            row: Dictionary representing a data row.
+            column_types: Dictionary mapping column names to their types.
+
+        Returns:
+            Tuple of (modified row, issue description string or None).
+        """
         date_formats = ["%Y-%m-%d", "%m/%d/%Y", "%d-%b-%Y", "%d/%m/%Y", "%Y%m%d"]
         phone_formats = [
             "+1-555-123-4567",
@@ -113,11 +159,29 @@ class QualityIssues:
         return row, None
 
     def mark_duplicate_rows(self, batch: List[Dict[str, Any]], duplicate_indices: List[int]) -> List[Dict[str, Any]]:
-        modified_batch = [row.copy() for row in batch]
+        """Mark specified rows in a batch as duplicates of other rows.
 
+        Args:
+            batch: List of data rows.
+            duplicate_indices: List of indices indicating which rows should become duplicates.
+
+        Returns:
+            Modified batch with specified rows duplicated.
+        """
+        # modified_batch = [row.copy() for row in batch]
+
+        # for idx in duplicate_indices:
+        #     if idx < len(modified_batch):
+        #         dup_idx = choice([i for i in range(len(modified_batch)) if i != idx])
+        #         modified_batch[idx] = modified_batch[dup_idx].copy()
+
+        if not duplicate_indices:
+            return batch
+        
+        modified_batch = list(batch)  # Create a shallow copy of the batch
         for idx in duplicate_indices:
             if idx < len(modified_batch):
                 dup_idx = choice([i for i in range(len(modified_batch)) if i != idx])
-                modified_batch[idx] = modified_batch[dup_idx].copy()
+                modified_batch[idx] = modified_batch[dup_idx]
 
         return modified_batch

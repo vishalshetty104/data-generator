@@ -1,1 +1,1 @@
-# src package
+"""src package - Synthetic data generator with quality issues."""
